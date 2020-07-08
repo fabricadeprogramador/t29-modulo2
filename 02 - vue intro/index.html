@@ -8,6 +8,14 @@
     <div id="app">
       <div v-if="convidado.sexo == 'M'">Bem-vindo, {{convidado.nome}}</div>
       <div v-else>Bem-vinda, {{convidado.nome}}</div>
+
+      <div>
+        <ol>
+          <li v-for="(conv, indice) in convidados">
+            {{conv.nome}}, {{conv.idade}}, {{conv.sexo}} => {{indice}}
+          </li>
+        </ol>
+      </div>
     </div>
   </body>
   <script>
@@ -19,6 +27,28 @@
           idade: 82,
           sexo: "M",
         },
+        convidados: [
+          {
+            nome: "Jão da Silva",
+            idade: 82,
+            sexo: "M",
+          },
+          {
+            nome: "Maria da Silva",
+            idade: 25,
+            sexo: "F",
+          },
+          {
+            nome: "Zé da Silva",
+            idade: 8,
+            sexo: "M",
+          },
+          {
+            nome: "Fernando da Silva",
+            idade: 38,
+            sexo: "M",
+          },
+        ],
       },
     });
   </script>

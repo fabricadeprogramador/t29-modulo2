@@ -1,0 +1,52 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Lista de Usuários</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <input
+        type="text"
+        placeholder="Username"
+        id="username"
+        v-model="usuarioAtual.username"
+      />
+      <input
+        type="password"
+        placeholder="Senha"
+        id="senha"
+        v-model="usuarioAtual.senha"
+      />
+
+      <select name="tipo" id="tipo" v-model="usuarioAtual.tipo">
+        <option value="ADMIN">Admin</option>
+        <option value="CLIENTE">Cliente</option>
+      </select>
+
+      <button type="button" @click="adicionar()">Adicionar</button>
+
+      <div>
+        <ol>
+          <li v-for="usu in usuarios">
+            {{usu.username}}, {{usu.senha}}, {{usu.tipo}}
+          </li>
+        </ol>
+      </div>
+    </div>
+  </body>
+  <script>
+    var app = new Vue({
+      el: "#app",
+      data: {
+        usuarios: [],
+        usuarioAtual: {},
+      },
+      methods: {
+        adicionar() {
+          this.usuarios.push(this.usuarioAtual);
+        },
+      },
+    });
+  </script>
+</html>
