@@ -27,11 +27,20 @@
       <button type="button" @click="adicionar()">Adicionar</button>
 
       <div>
-        <ol>
-          <li v-for="usu in usuarios">
-            {{usu.username}}, {{usu.senha}}, {{usu.tipo}}
-          </li>
-        </ol>
+        <table>
+          <thead>
+            <th>Username</th>
+            <th>Senha</th>
+            <th>Tipo</th>
+          </thead>
+          <tbody>
+            <tr v-for="usuario in usuarios" :key="usuario.username">
+              <td>{{ usuario.username }}</td>
+              <td>{{ usuario.senha }}</td>
+              <td>{{ usuario.tipo }}</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </body>
@@ -44,7 +53,11 @@
       },
       methods: {
         adicionar() {
-          this.usuarios.push(this.usuarioAtual);
+          let usuarioNovo = {};
+          usuarioNovo.username = this.usuarioAtual.username;
+          usuarioNovo.senha = this.usuarioAtual.senha;
+          usuarioNovo.tipo = this.usuarioAtual.tipo;
+          this.usuarios.push(usuarioNovo);
         },
       },
     });
