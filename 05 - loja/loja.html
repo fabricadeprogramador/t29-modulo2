@@ -1,0 +1,169 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Loja HT</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app" class="containerExterno">
+      <h1>Loja HT</h1>
+
+      <div>
+        <div
+          v-for="produto in produtos"
+          :key="produto.id"
+          class="containerProduto"
+        >
+          <div class="containerColuna">
+            <img :src="produto.imagem" />
+          </div>
+
+          <div class="containerColuna">
+            <div>Nome: {{ produto.nome }}</div>
+            <div>Quantidade: {{ produto.qtd }}</div>
+            <div>Descrição: {{ produto.descricao }}</div>
+          </div>
+
+          <div class="containerColuna">
+            R$ {{ (produto.preco).toFixed(2) }}
+          </div>
+
+          <div class="containerColuna">
+            <button @click="adicionarAoCarrinho(produto)" class="botao">
+              Adicionar ao Carrinho
+            </button>
+          </div>
+        </div>
+      </div>
+        <div>
+          <h2>
+            Quantidade de produtos no carrinho: {{ carrinho.length }}
+          </h2>
+        </div>
+
+        <div>
+          <h2>
+            Valor total: R$ {{ (valorTotal).toFixed(2) }}
+          </h2>
+        </div>
+
+        <div>
+          <button type="button" @click="finalizar" class="botao">
+            Finalizar
+          </button>
+        </div>
+      </div>
+    </div>
+  </body>
+
+  <style>
+    body {
+      font-family: sans-serif;
+    }
+
+    img {
+      width: 100px;
+    }
+
+    h1{
+        margin: 40px 0px;
+    }
+
+    .containerExterno {
+      text-align: center;
+    }
+
+    .containerProduto {
+      display: flex;
+      width: 50%;
+      margin: auto;
+    }
+
+    .containerColuna {
+      width: 25%;
+    }
+
+    .botao {
+      border: none;
+      padding: 10px;
+      background-color: lightseagreen;
+      color: white;
+      font-weight: 700;
+      border-radius: 5px;
+      box-shadow: 1px 1px 10px gray;
+      cursor: pointer;
+    }
+  </style>
+
+  <script>
+    var app = new Vue({
+      el: "#app",
+      data: {
+        produtos: [
+          {
+            id: 0,
+            imagem: "img/sapato.jpg",
+            nome: "Sapato Social",
+            qtd: 10,
+            descricao: "Sapato social preto em couro.",
+            preco: 25.9,
+          },
+          {
+            id: 1,
+            imagem: "img/sapato.jpg",
+            nome: "Sapato Social",
+            qtd: 10,
+            descricao: "Sapato social preto em couro.",
+            preco: 25.9,
+          },
+          {
+            id: 2,
+            imagem: "img/sapato.jpg",
+            nome: "Sapato Social",
+            qtd: 10,
+            descricao: "Sapato social preto em couro.",
+            preco: 25.9,
+          },
+          {
+            id: 3,
+            imagem: "img/sapato.jpg",
+            nome: "Sapato Social",
+            qtd: 10,
+            descricao: "Sapato social preto em couro.",
+            preco: 25.9,
+          },
+          {
+            id: 4,
+            imagem: "img/sapato.jpg",
+            nome: "Sapato Social",
+            qtd: 10,
+            descricao: "Sapato social preto em couro.",
+            preco: 25.9,
+          },
+        ],
+        carrinho: [],
+        valorTotal: 0,
+      },
+      methods: {
+        adicionarAoCarrinho(produto) {
+          if (produto.qtd > 0) {
+            this.carrinho.push(produto);
+            this.valorTotal += produto.preco;
+            produto.qtd--;
+          } else {
+            alert("Produto temporariamente indisponível!");
+          }
+        },
+
+        finalizar() {
+          this.valorTotal = 0;
+          this.carrinho = [];
+
+          for (let i = 0; i < this.produtos.length; i++) {
+              this.produtos[i].qtd = 10
+          }
+        },
+      },
+    });
+  </script>
+</html>
