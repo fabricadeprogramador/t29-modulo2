@@ -1,0 +1,52 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Componentes</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <ol>
+        <lista-convidados
+          v-for="conv in convidados"
+          :convidado="conv"
+          :key="conv.id"
+        ></lista-convidados>
+      </ol>
+    </div>
+  </body>
+
+  <script>
+    Vue.component("lista-convidados", {
+      props: ["convidado"],
+      template:
+        "<li> {{ convidado.nome }} - {{ convidado.idade }} - {{ convidado.sexo }}</li>",
+    });
+
+    var app = new Vue({
+      el: "#app",
+      data: {
+        convidados: [
+          {
+            id: 0,
+            nome: "Jão da Silva",
+            idade: 86,
+            sexo: "M",
+          },
+          {
+            id: 1,
+            nome: "Maria da Silva",
+            idade: 50,
+            sexo: "F",
+          },
+          {
+            id: 2,
+            nome: "Zé da Silva",
+            idade: 42,
+            sexo: "M",
+          },
+        ],
+      },
+    });
+  </script>
+</html>
