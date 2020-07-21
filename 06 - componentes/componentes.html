@@ -8,9 +8,9 @@
     <div id="app">
       <ol>
         <lista-convidados
-          v-for="conv in convidados"
+          v-for="conv, index in convidados"
           :convidado="conv"
-          :key="conv.id"
+          :key="index"
         ></lista-convidados>
       </ol>
     </div>

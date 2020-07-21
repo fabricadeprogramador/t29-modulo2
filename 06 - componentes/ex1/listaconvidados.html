@@ -1,0 +1,53 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Lista de convidados Componente</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <h1>Lista de Convidados</h1>
+      <input type="text" placeholder="Nome" v-model="convidadoAtual.nome" />
+      <input type="text" placeholder="Idade" v-model="convidadoAtual.idade" />
+      <input type="text" placeholder="Sexo" v-model="convidadoAtual.sexo" />
+
+      <button type="button" @click="adicionar">Adicionar</button>
+
+      <lista-convidados :convidado="convidadoAtual"></lista-convidados>
+    </div>
+  </body>
+
+  <script>
+    Vue.component("lista-convidados", {
+      props: ["convidado"],
+      template: `
+                    <div>
+                        <ol>
+                            <li v-for="conv, index in convidados" :key="index">
+                                {{conv.nome}} {{conv.idade}} {{conv.sexo}}
+                            </li>
+                        </ol>
+                    </div>`,
+      data() {
+        return {
+          convidados: [],
+        };
+      },
+      methods: {
+        adicionar() {
+          this.convidados.push(this.convidado);
+        },
+      },
+    });
+
+    var app = new Vue({
+      el: "#app",
+      data: {
+        convidadoAtual: {},
+      },
+      methods: {
+        adicionar() {},
+      },
+    });
+  </script>
+</html>
