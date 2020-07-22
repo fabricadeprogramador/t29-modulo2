@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Exemplo event emitter</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <h1>Testando Eventos</h1>
+      <meu-componente
+        nome="Jão da Silva"
+        @meu-evento="imprimirBoasVindas"
+      ></meu-componente>
+    </div>
+  </body>
+
+  <script>
+    Vue.component("meu-componente", {
+      props: {
+        nome: String,
+      },
+      template: `
+                    <div>
+                        <button type="button" @click="resolver">Ir</button>
+                    </div>
+                    `,
+      data() {
+        return {};
+      },
+      methods: {
+        resolver() {
+          this.$emit("meu-evento", this.nome);
+        },
+      },
+    });
+
+    var app = new Vue({
+      el: "#app",
+      data() {
+        return {};
+      },
+      methods: {
+        imprimirBoasVindas(cliente) {
+          alert("Seja bem-vindo(a) " + cliente);
+        },
+      },
+    });
+  </script>
+</html>

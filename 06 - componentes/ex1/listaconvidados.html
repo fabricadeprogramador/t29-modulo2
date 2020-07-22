@@ -11,17 +11,19 @@
       <input type="text" placeholder="Idade" v-model="convidadoAtual.idade" />
       <input type="text" placeholder="Sexo" v-model="convidadoAtual.sexo" />
 
-      <button type="button" @click="adicionar">Adicionar</button>
+      <!-- <button type="button" @click="adicionar">Adicionar</button> -->
 
       <lista-convidados :convidado="convidadoAtual"></lista-convidados>
     </div>
   </body>
 
   <script>
+    //   COMPONENTE
     Vue.component("lista-convidados", {
       props: ["convidado"],
       template: `
                     <div>
+                    <button type="button" @click="adicionar">Adicionar</button>
                         <ol>
                             <li v-for="conv, index in convidados" :key="index">
                                 {{conv.nome}} {{conv.idade}} {{conv.sexo}}
@@ -35,18 +37,18 @@
       },
       methods: {
         adicionar() {
-          this.convidados.push(this.convidado);
+          let convClone = {};
+          Object.assign(convClone, this.convidado);
+          this.convidados.push(convClone);
         },
       },
     });
 
+    // OBJETO VUE DE CONTROLE DO ELEMENTO RAIZ
     var app = new Vue({
       el: "#app",
       data: {
         convidadoAtual: {},
-      },
-      methods: {
-        adicionar() {},
       },
     });
   </script>
