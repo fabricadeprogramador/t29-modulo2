@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Cadastro de Usuários</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <h1>Cadastro de Usuários</h1>
+
+      <div>
+        <select name="tipo" id="tipo" v-model="tipo">
+          <option value="ADMIN">ADMIN</option>
+          <option value="CLIENTE">CLIENTE</option>
+        </select>
+      </div>
+
+      <cadastro-usuario
+        :tipoprop="tipo"
+        @devolver-usuario="adicionar"
+      ></cadastro-usuario>
+
+      <div>
+        <table>
+          <thead>
+            <th>Nome</th>
+            <th>Username</th>
+            <th>Senha</th>
+            <th>Tipo</th>
+          </thead>
+          <tbody>
+            <tr v-for="usuario, index in usuariosList" :key="index">
+              <td>{{ usuario.nome }}</td>
+              <td>{{ usuario.username }}</td>
+              <td>{{ usuario.senha }}</td>
+              <td>{{ usuario.tipo }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </body>
+  <script>
+    //   COMPONENTE FILHO
+    Vue.component("cadastro-usuario", {
+      props: {
+        tipoprop: String,
+      },
+      template: `
+                <div>
+                    <h2> Cadastro </h2>
+                    <div>
+                        <input type="text" placeholder="Nome" v-model="usuario.nome"></input>
+                    </div>
+                    
+                    <div>
+                        <input type="text" placeholder="Username" v-model="usuario.username"></input>
+                    </div>
+
+                    <div>
+                        <input type="password" placeholder="Senha" v-model="usuario.senha"></input>
+                    </div>
+
+                    <div>
+                        <button type="button" @click="salvar">Salvar</button>
+                    </div>
+                </div>
+        `,
+      data() {
+        return {
+          usuario: {},
+        };
+      },
+      methods: {
+        salvar() {
+          this.usuario.tipo = this.tipoprop;
+          this.$emit("devolver-usuario", this.usuario);
+          this.limpar();
+        },
+        limpar() {
+          this.usuario = {};
+        },
+      },
+    });
+
+    // OBJETO VUE CONTROLLER DO COMPONENTE PAI
+    var app = new Vue({
+      el: "#app",
+      data() {
+        return {
+          usuariosList: [],
+          tipo: "",
+        };
+      },
+      methods: {
+        adicionar(usuario) {
+          this.usuariosList.push(usuario);
+        },
+      },
+    });
+  </script>
+</html>
