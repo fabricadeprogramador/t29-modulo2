@@ -93,6 +93,30 @@
           tipo: "",
         };
       },
+      beforeCreate() {
+        alert("ANTES DE CRIAR!!");
+      },
+      created() {
+        alert("CRIADO!!");
+      },
+      beforeMount() {
+        alert("ANTES DE MONTAR!!");
+      },
+      mounted() {
+        alert("MONTADO!!");
+      },
+      beforeUpdate() {
+        alert("ANTES DE ATUALIZAR!!");
+      },
+      updated() {
+        alert("ATUALIZADO!!");
+      },
+      beforeDestroy() {
+        alert("ANTES DE DESTRUIR!!");
+      },
+      destroyed() {
+        alert("DESTRUIDO!!");
+      },
       methods: {
         adicionar(usuario) {
           this.usuariosList.push(usuario);
