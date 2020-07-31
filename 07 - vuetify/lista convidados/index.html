@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css"
+      rel="stylesheet"
+    />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui"
+    />
+  </head>
+  <body>
+    <div id="app">
+      <v-app>
+        <!-- JANELA DE CADASTRO -->
+
+        <v-dialog v-model="dialog" max-width="500px">
+          <v-card>
+            <v-card-title>
+              <span class="headline">Cadastro de Convidado</span>
+            </v-card-title>
+
+            <v-card-text>
+              <!-- FORM -->
+              <v-form>
+                <v-container>
+                  <v-row>
+                    <v-col cols="12">
+                      <v-text-field
+                        v-model="convidadoAtual.nome"
+                        label="Nome"
+                      ></v-text-field>
+                    </v-col>
+
+                    <v-col cols="12">
+                      <v-text-field
+                        v-model="convidadoAtual.idade"
+                        label="Idade"
+                        type="number"
+                      ></v-text-field>
+                    </v-col>
+
+                    <v-col cols="12">
+                      <v-subheader class="pa-1" dense>Sexo:</v-subheader>
+                      <v-radio-group
+                        v-model="convidadoAtual.sexo"
+                        row
+                        class="mt-0"
+                      >
+                        <v-radio label="Masculino" value="M"></v-radio>
+                        <v-radio label="Feminino" value="F"></v-radio>
+                      </v-radio-group>
+                    </v-col>
+                  </v-row>
+                </v-container>
+              </v-form>
+            </v-card-text>
+
+            <v-card-actions>
+              <v-row>
+                <v-col cols="12">
+                  <v-row justify="center">
+                    <v-btn color="success" class="mr-4" @click="adicionar">
+                      Salvar
+                    </v-btn>
+                    <v-btn color="error" class="mr-4" @click="cancelar">
+                      Cancelar
+                    </v-btn>
+                  </v-row>
+                </v-col>
+              </v-row>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+
+        <v-container>
+          <v-row>
+            <v-col cols="12">
+              <!-- DATA TABLE (LISTA DE CONVIDADOS) -->
+              <v-data-table
+                :headers="cabecalho"
+                :items="convidados"
+                sort-by="calories"
+                class="elevation-1"
+              >
+                <!-- SLOT 1 => Barra Superior -->
+                <template v-slot:top>
+                  <v-toolbar flat color="white">
+                    <v-toolbar-title>Convidados</v-toolbar-title>
+                    <v-divider class="mx-4" inset vertical></v-divider>
+                    <v-spacer></v-spacer>
+                    <v-btn
+                      color="primary"
+                      dark
+                      class="mb-2"
+                      @click="abrirCadastro"
+                      >Novo Convidado</v-btn
+                    >
+                  </v-toolbar>
+                </template>
+
+                <!-- SLOT 2 => Coluna de Ações -->
+                <template v-slot:item.acoes="{ item }">
+                  <v-icon small class="mr-2" @click="editarItem(item)">
+                    mdi-pencil
+                  </v-icon>
+                  <v-icon small @click="deletarItem(item)">
+                    mdi-delete
+                  </v-icon>
+                </template>
+              </v-data-table>
+            </v-col>
+          </v-row>
+        </v-container>
+      </v-app>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+    <script>
+      var app = new Vue({
+        el: "#app",
+        vuetify: new Vuetify(),
+        data() {
+          return {
+            dialog: false,
+            cabecalho: [
+              {
+                text: "Id",
+                value: "id",
+              },
+              {
+                text: "Nome",
+                value: "nome",
+              },
+              { text: "Idade", value: "idade" },
+              { text: "Sexo", value: "sexo" },
+              { text: "Ações", value: "acoes", sortable: false },
+            ],
+            convidadoAtual: {},
+            convidados: [],
+            geradorId: 0,
+          };
+        },
+        methods: {
+          abrirCadastro() {
+            this.dialog = true;
+          },
+          adicionar() {
+            this.convidadoAtual.id = this.geradorId;
+            this.convidados.push(this.convidadoAtual);
+            this.geradorId++;
+            this.cancelar();
+            this.dialog = false;
+          },
+          cancelar() {
+            this.convidadoAtual = {};
+            this.dialog = false;
+          },
+          editarItem(item) {},
+          deletarItem(item) {},
+        },
+      });
+    </script>
+  </body>
+</html>
