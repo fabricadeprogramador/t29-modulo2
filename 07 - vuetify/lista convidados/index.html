@@ -69,11 +69,11 @@
               <v-row>
                 <v-col cols="12">
                   <v-row justify="center">
-                    <v-btn color="success" class="mr-4" @click="adicionar">
-                      Salvar
-                    </v-btn>
                     <v-btn color="error" class="mr-4" @click="cancelar">
                       Cancelar
+                    </v-btn>
+                    <v-btn color="success" class="mr-4" @click="salvar">
+                      Salvar
                     </v-btn>
                   </v-row>
                 </v-col>
@@ -148,6 +148,7 @@
             ],
             convidadoAtual: {},
             convidados: [],
+            convidadoEdicao: null,
             geradorId: 0,
           };
         },
@@ -155,19 +156,61 @@
           abrirCadastro() {
             this.dialog = true;
           },
+
           adicionar() {
             this.convidadoAtual.id = this.geradorId;
             this.convidados.push(this.convidadoAtual);
             this.geradorId++;
-            this.cancelar();
-            this.dialog = false;
           },
+
+          editarItem(item) {
+            for (let i = 0; i < this.convidados.length; i++) {
+              if (this.convidados[i].id == item.id) {
+                Object.assign(this.convidadoAtual, this.convidados[i]);
+                this.convidadoEdicao = this.convidadoAtual;
+                this.dialog = true;
+                break;
+              }
+            }
+          },
+
+          salvar() {
+            if (this.convidadoEdicao != null) {
+              this.salvarEdicao();
+            } else {
+              this.adicionar();
+            }
+
+            this.cancelar();
+          },
+
           cancelar() {
             this.convidadoAtual = {};
             this.dialog = false;
+            this.convidadoEdicao = null;
           },
-          editarItem(item) {},
-          deletarItem(item) {},
+
+          salvarEdicao() {
+            for (let i = 0; i < this.convidados.length; i++) {
+              if (this.convidados[i].id == this.convidadoEdicao.id) {
+                this.convidados[i].nome = this.convidadoAtual.nome;
+                this.convidados[i].idade = this.convidadoAtual.idade;
+                this.convidados[i].sexo = this.convidadoAtual.sexo;
+                break;
+              }
+            }
+          },
+
+          deletarItem(item) {
+            if (confirm("Tem certeza que deseja deletar este item?")) {
+              for (let i = 0; i < this.convidados.length; i++) {
+                if (this.convidados[i].id == item.id) {
+                  this.convidados.splice(i, 1);
+                  break;
+                }
+              }
+            }
+          },
         },
       });
     </script>
